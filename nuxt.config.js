@@ -14,17 +14,52 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   loading: { color: '#fff' },
-  css: [],
+  css: ['~assets/scss/app.scss'],
   plugins: [],
-  buildModules: ['@nuxtjs/eslint-module', '@nuxtjs/stylelint-module'],
+  buildModules: [
+    '@nuxtjs/eslint-module',
+    '@nuxtjs/stylelint-module',
+    '@nuxtjs/redirect-module'
+  ],
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/pwa',
     '@nuxtjs/dotenv',
+    '@nuxtjs/style-resources',
     'nuxt-svg-loader'
   ],
+  styleResources: {
+    scss: ['./assets/css/*.scss']
+  },
   axios: {},
+  redirect: [
+    {
+      from: '^/twitter',
+      to: 'https://twitter.com/Cleymax'
+    },
+    {
+      from: '^/github',
+      to: 'https://github.com/Cleymax'
+    },
+    {
+      from: '^/email',
+      to: 'mailto:contact@cleymax.fr'
+    },
+    {
+      from: '^/paypal',
+      to: 'https://paypal.me/clementperrin'
+    }
+  ],
   build: {
-    extend(config, ctx) {}
+    extend(config, ctx) {
+      if (ctx.isDev) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)|(\.svg$)/
+        })
+      }
+    }
   }
 }
