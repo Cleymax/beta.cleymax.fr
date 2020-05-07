@@ -1,0 +1,15 @@
+@mixin light($color) {
+  @if lightness($color) < 0.5 {
+    color: $color !important;
+  } @else {
+    color: lighten($color, 50%) !important;
+  }
+}
+
+@mixin darken($color ) {
+  @if lightness($color) > 0.5 {
+    color: $color !important;
+  } @else {
+    color: darken($color, 50%) !important;
+  }
+}
